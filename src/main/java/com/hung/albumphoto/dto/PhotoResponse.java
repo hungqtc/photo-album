@@ -12,7 +12,7 @@ import lombok.Setter;
 public class PhotoResponse extends BaseDTO{
     private String name;
 
-    private String picture_url;
+    private String pictureUrl;
 
-    private Long album_id;
+    private Long albumId;
 }

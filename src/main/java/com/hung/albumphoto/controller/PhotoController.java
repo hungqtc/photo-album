@@ -1,6 +1,5 @@
 package com.hung.albumphoto.controller;
 
-import com.hung.albumphoto.entity.AlbumEntity;
 import com.hung.albumphoto.service.PhotoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;

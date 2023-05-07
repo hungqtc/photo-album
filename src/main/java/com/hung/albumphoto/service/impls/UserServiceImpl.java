@@ -37,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity save(UserDTO user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return null;
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(user.getEmail());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));

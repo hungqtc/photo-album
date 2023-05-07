@@ -19,8 +19,8 @@ public class PhotoEntity extends BaseEntity{
     @Column(name = "name")
     private String name;
 
-    @Lob
-    private byte[] picture;
+    @Column(name = "picture")
+    private String picture;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "album_id", nullable = false)

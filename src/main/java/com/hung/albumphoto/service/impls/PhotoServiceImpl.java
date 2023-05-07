@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,8 +37,8 @@ public class PhotoServiceImpl implements PhotoService {
             PhotoResponse response = new PhotoResponse();
             response.setId(entity.getId());
             response.setName(entity.getName());
-            response.setPicture_url(fileUtil.getUrl(entity.getId()));
-            response.setAlbum_id(entity.getAlbumEntity().getId());
+            response.setPictureUrl(entity.getPicture());
+            response.setAlbumId(entity.getAlbumEntity().getId());
             responses.add(response);
         }
         return responses;
@@ -52,38 +51,45 @@ public class PhotoServiceImpl implements PhotoService {
             PhotoResponse response = new PhotoResponse();
             response.setId(entity.getId());
             response.setName(entity.getName());
-            response.setPicture_url(fileUtil.getUrl(entity.getId()));
-            response.setAlbum_id(entity.getAlbumEntity().getId());
+            response.setPictureUrl(entity.getPicture());
+            response.setAlbumId(entity.getAlbumEntity().getId());
             responses.add(response);
         }
         return responses;
     }
 
     @Override
-    public PhotoResponse create(MultipartFile file, String name, long album_id) throws IOException {
+    public PhotoResponse create(MultipartFile file, String name, long albumId) throws IOException {
         PhotoEntity entity = new PhotoEntity();
         entity.setName(name);
-        entity.setPicture(file.getBytes());
-        Optional<AlbumEntity> album = albumRepository.findById(album_id);
+        entity.setPicture(fileUtil.getUrl(file));
+        Optional<AlbumEntity> album = albumRepository.findById(albumId);
         entity.setAlbumEntity(album.get());
+        PhotoEntity photoSaved = photoRepository.save(entity);
+
         PhotoResponse response = new PhotoResponse();
-        long id = photoRepository.getLastedIdRecord();
-        response.setId(id);
+        response.setId(photoSaved.getId());
         response.setName(entity.getName());
-        response.setAlbum_id(album_id);
-        response.setPicture_url(fileUtil.getUrl(id));
-        photoRepository.save(entity);
+        response.setAlbumId(albumId);
+        response.setPictureUrl(entity.getPicture());
         return response;
     }
 
     @Override
-    public PhotoResponse update(MultipartFile file, String name, long id) {
+    public PhotoResponse update(MultipartFile file, String name, long id) throws IOException {
         Optional<PhotoEntity> entity = photoRepository.findById(id);
         PhotoResponse response = new PhotoResponse();
+        PhotoEntity photoEntity = new PhotoEntity();
+        photoEntity.setId(entity.get().getId());
+        photoEntity.setPicture(fileUtil.getUrl(file));
+        photoEntity.setName(name);
+        photoEntity.setAlbumEntity(entity.get().getAlbumEntity());
+        photoRepository.save(photoEntity);
+
         response.setId(entity.get().getId());
-        response.setName(entity.get().getName());
-        response.setPicture_url(fileUtil.getUrl(id));
-        response.setAlbum_id(entity.get().getAlbumEntity().getId());
+        response.setName(name);
+        response.setPictureUrl(fileUtil.getUrl(file));
+        response.setAlbumId(entity.get().getAlbumEntity().getId());
         return response;
     }
 

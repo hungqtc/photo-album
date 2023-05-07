@@ -11,7 +11,7 @@ public interface PhotoService {
     List<PhotoResponse> findALl();
 
     List<PhotoResponse> findALlByAlbum(Long albumId);
-    PhotoResponse create(MultipartFile file,String name, long album_id) throws IOException;
+    PhotoResponse create(MultipartFile file,String name, long albumId) throws IOException;
 
     PhotoResponse update(MultipartFile file, String name, long id) throws IOException;
 

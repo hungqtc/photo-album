@@ -21,19 +21,19 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumEntity create(AlbumEntity album) {
-        AlbumEntity _album = new AlbumEntity();
-        _album.setName(album.getName());
-        _album.setDescription(album.getDescription());
-        return albumRepository.save(_album);
+        AlbumEntity albumNew = new AlbumEntity();
+        albumNew.setName(album.getName());
+        albumNew.setDescription(album.getDescription());
+        return albumRepository.save(albumNew);
     }
 
     @Override
-    public AlbumEntity update(AlbumEntity album) {
-        Optional<AlbumEntity> albumData = albumRepository.findById(album.getId());
-            AlbumEntity _album = albumData.get();
-            _album.setDescription(album.getName());
-            _album.setName(album.getName());
-            return albumRepository.save(_album);
+    public AlbumEntity update(AlbumEntity albumRequest) {
+            AlbumEntity albumResponse = new AlbumEntity();
+            albumResponse.setId(albumRequest.getId());
+            albumResponse.setDescription(albumRequest.getDescription());
+            albumResponse.setName(albumRequest.getName());
+            return albumRepository.save( albumResponse);
     }
 
     @Override

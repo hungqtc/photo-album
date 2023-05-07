@@ -1,11 +1,8 @@
 package com.hung.albumphoto.dto;
 
-import com.hung.albumphoto.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
