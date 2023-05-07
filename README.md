@@ -8,5 +8,6 @@ CRUD <br />
 2. Run project : <br />
 ./mvnw spring-boot:run <br />
 
-3. Swagger: <br />
+3. Swagger API: <br />
 http://localhost:8080/swagger-ui/index.html
+
